@@ -17,20 +17,11 @@ jobs:
       - name: Setup Android
         uses: ./.github/actions/android-setup
 
-      - name: Configure Keystore
-        run: |
-          echo "${{ secrets.KEYSTORE_FILE }}" > keystore.asc
-          gpg -d --passphrase "${{ secrets.KEYSTORE_PASSPHRASE }}" --batch keystore.asc > app/keystore
-          echo "storeFile=app/keystore" >> local.properties
-          echo "storePassword=${{ secrets.KEYSTORE_STORE_PASSWORD }}" >> local.properties
-          echo "keyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}" >> local.properties
-          echo "keyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}" >> local.properties
+      - name: Build Debug APK
+        run: ./gradlew app:assembleDogDebug
 
-      - name: Build Other Release APK
-        run: ./gradlew app:assembleOtherRelease
-
-      - name: Create Prerelease and Upload APK
+      - name: Create Release and Upload APK
         uses: softprops/action-gh-release@v2
         with:
-          body: "See [CHANGELOG.md](https://github.com/timer-machine/timer-machine-android/blob/main/CHANGELOG.md)"
-          files: app/build/outputs/apk/other/release/*.apk
+          body: "See [CHANGELOG.md](https://github.com/rajwalgautam/timer-machine-android/blob/main/CHANGELOG.md)"
+          files: app/build/outputs/apk/dog/debug/*.apk

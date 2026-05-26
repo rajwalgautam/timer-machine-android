@@ -21,7 +21,6 @@ import xyz.aprildown.timer.presentation.StreamMachineIntentProvider
 import xyz.aprildown.timer.presentation.stream.MachineContract
 import xyz.aprildown.timer.presentation.stream.StreamState
 import xyz.aprildown.timer.presentation.stream.TimerIndex
-import xyz.aprildown.timer.presentation.stream.getNiceLoopString
 import xyz.aprildown.timer.presentation.stream.getStep
 
 class ScreenViewModelTest {
@@ -59,11 +58,7 @@ class ScreenViewModelTest {
         verify(presenter).addListener(t.id, viewModel)
 
         assertEquals(
-            ScreenViewModel.formatStepInfo(
-                timerName = t.name,
-                loopString = currentIndex.getNiceLoopString(max = t.loop),
-                stepName = t.getStep(currentIndex)?.label.toString()
-            ),
+            t.getStep(currentIndex)?.label.toString(),
             viewModel.timerStepInfo.value
         )
 
