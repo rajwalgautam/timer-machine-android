@@ -94,5 +94,4 @@ class ScreenViewModel @Inject constructor(
     }
 
     override fun end(timerId: Int, forced: Boolean) = Unit
-
 }
